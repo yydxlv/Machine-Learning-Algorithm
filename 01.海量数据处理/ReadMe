@@ -1,0 +1,54 @@
+总结：分布式数据，hash映射，hash统计，外\堆排序是处理海量数据的一把利器，有机会可以在Hadoop上实现reducer和mapper的过程。
+最终的结果ip按重复次数的从高到低保留在sorted.txt中。
+场景：海量日志数据，提取出某日访问百度次数最多的K个IP
+输出：最终的结果ip按重复次数的从高到低保留在sorted.txt中。
+（一）生成数据
+GenerateMassiveIPAddr.py
+我首先构造1亿个IP，这些IP前两段都是“10.197”，后两段为0-255的随机数
+把这1亿个IP存入一个文本文件中
+从Python的print日志中基本可以看出，生成一千万条IP地址大概需要1分钟，生成1亿条记录需要20分钟，占据硬盘空间：1.4G
+日志：
+    Wed Jun 10 08:51:29 2015
+      0: Wed Jun 10 08:51:29 2015
+      1: Wed Jun 10 08:53:48 2015
+      2: Wed Jun 10 08:56:01 2015
+      3: Wed Jun 10 08:58:15 2015
+      4: Wed Jun 10 09:00:29 2015
+      5: Wed Jun 10 09:02:42 2015
+      6: Wed Jun 10 09:04:59 2015
+      7: Wed Jun 10 09:07:15 2015
+      8: Wed Jun 10 09:09:31 2015
+      9: Wed Jun 10 09:11:46 2015
+    Wed Jun 10 09:14:05 2015
+
+（二）处理思路
+
+假设现在可用内存仅为128M，而每行IP经计算需要14Byte
+因为数据太大，把1亿条数据载入内存，再做排序会导致内存溢出。July的思想：“以大化小，分而治之”非常合适，我转化后的操作思路：
+
+1. 每行IP需要14B空间，那么128M内存最多可以处理 128M / 14B = 9142857个IP
+
+    把每36571429个IP拆成一个小文件保存起来，每个小文件的大小小于等于128M，共将生成11个文件
+
+2. 对11个小文件进行hash映射，使得相同哈希的ip分在同一个小文件中
+   对11个小文件中的ip数进行统计，重复最多的ip放在前面,包括ip和次数
+对每个小文件用Hash Table处理，Python有自己非常高效的Hash Table：Dictionary！
+
+    具体处理如下：
+
+    1）构建名为“Result”的Dictionary，“key”为IP地址，“value”为该IP地址出现的次数，用来记录11个文件每一个的最多出现的IP
+
+    2）构建名为“IP”的Dictionary，“key”为IP地址，“value”为该IP地址出现的次数，用来记录每一个小文件的所有IP地址
+
+    3）读入每一条IP地址到“IP” Dictionary，如果该IP地址出现过，把相应的value的值加1；如果该IP地址没有出现过，则key=IP地址，value=1
+
+    4）对“IP” Dictionary进行内排序，返回最大的IP地址（如果有若干个最大值是一样的，就都返回）
+
+    5）将返回值存入“Result” Dictionary
+
+    6）对“Result”进行内排序，返回最大的IP地址（如果有若干个最大值是一样的，就都返回）
+
+if __name__ == '__main__':
+    hashfiles()
+    sortqueryinfile()
+    print "sorting completed, total queries: ", mergefiles()
