@@ -11,9 +11,10 @@ def prepare_data_train(fname):
     """ read and prepare training data """
     # Read data
     data = pd.read_csv(fname)
-    print(data)
+    # print(data)
     # events file
-    events_fname = fname.replace('_data', '_events')
+    # events_fname = fname.replace('_data', '_events')
+    events_fname = fname.replace('data', 'events')
     print(events_fname)
     # read event file
     labels= pd.read_csv(events_fname)
@@ -56,7 +57,7 @@ for subject in subjects:
     raw = []
     #  READ DATA
     # fnames = glob('../input/train/subj%d_series*_data.csv' % subject)
-    fnames = glob('data.csv' % subject)
+    fnames = glob('data.csv')
     for fname in fnames:
       data,labels=prepare_data_train(fname)
       raw.append(data)
@@ -79,7 +80,7 @@ for subject in subjects:
       data=prepare_data_test(fname)
       test.append(data)
       idx.append(np.array(data['id']))
-    X_test= pd.concat(test)
+    X_test = pd.concat(test)
     ids=np.concatenate(idx)
     ids_tot.append(ids)
     X_test=X_test.drop(['id' ], axis=1)  # remove id
@@ -87,7 +88,7 @@ for subject in subjects:
     X_test =np.asarray(X_test.astype(float))
 
 
- # Train classifiers
+ #  Train classifiers
     lr = LogisticRegression()
     pred = np.empty((X_test.shape[0],6))
     X_train=data_preprocess_train(X_train)
@@ -95,8 +96,8 @@ for subject in subjects:
     for i in range(6):
         y_train= y[:,i]
         print('Train subject %d, class %s' % (subject, cols[i]))
-        lr.fit(X_train[::subsample,:],y_train[::subsample])
-        pred[:,i] = lr.predict_proba(X_test)[:,1]
+        lr.fit(X_train[::subsample, :], y_train[::subsample])
+        pred[:, i] = lr.predict_proba(X_test)[:, 1]
     pred_tot.append(pred)
 
 # submission file
