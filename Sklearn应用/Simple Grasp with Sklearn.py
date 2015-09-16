@@ -96,7 +96,7 @@ for subject in subjects:
     for i in range(6):
         y_train= y[:,i]
         print('Train subject %d, class %s' % (subject, cols[i]))
-        lr.fit(X_train[::subsample, :], y_train[::subsample])
+        lr.fit(X_train[::subsample, :], y_train[::subsample])    # 每隔100行取样一次
         pred[:, i] = lr.predict_proba(X_test)[:, 1]
     pred_tot.append(pred)
 
@@ -109,5 +109,5 @@ submission = pd.DataFrame(index=np.concatenate(ids_tot),columns=cols,data=np.con
 # write file
 submission.to_csv(submission_file,index_label='id',float_format='%.3f')
 
-if __name__=="__main__":
-    prepare_data_train("data.csv")
+# if __name__=="__main__":
+#     prepare_data_train("data.csv")
