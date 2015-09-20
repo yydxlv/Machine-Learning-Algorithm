@@ -1,6 +1,8 @@
 __author__ = 'http://blog.dominodatalab.com/topology-and-density-based-clustering/'
 from sklearn.cluster import DBSCAN
 from sklearn.preprocessing import StandardScaler
+from functools import reduce
+from scipy.spatial import distance
 
 import pandas as pd
 import numpy
@@ -26,10 +28,10 @@ def makeCraters(inner_rad = 4, outer_rad = 4.5, donut_len = 2, inner_pts = 1000,
 #  computes the k-NN density estimate for 2-dimensional data:
 def knn_estimate(data, k, point):
     n,d = data.shape
-    #Reshape the datapoint, so the cdist function will work
+    # Reshape the datapoint, so the cdist function will work
     point = point.reshape((1,2))
-    #Find the distance to the kth nearest data point
-    knn = sorted(reduce(lambda x,y: x+y,cdist(data, point).tolist()))[k+1]
-    #Compute the density estimate using the mathematical formula
+    # Find the distance to the kth nearest data point
+    knn = sorted(reduce(lambda x,y: x+y,distance.cdist(data, point,'euclidean').tolist()))[k+1]
+    # Compute the density estimate using the mathematical formula
     estimate = float(k)/(n*np.power(knn, d)*np.pi)
     return estimate
