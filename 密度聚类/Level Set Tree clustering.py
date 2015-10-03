@@ -13,14 +13,14 @@ def makeCraters(inner_rad = 4, outer_rad = 4.5, donut_len = 2, inner_pts = 1000,
     #Make the inner core
     radius_core = inner_rad*np.random.random(inner_pts)
     direction_core = 2*np.pi*np.random.random(size = inner_pts)
-    #Simulate inner core points
+    # Simulate inner core points
     core_x = radius_core*np.cos(direction_core)
     core_y = radius_core*np.sin(direction_core)
     crater_core = zip(core_x, core_y)
-    #Make the outer ring
+    # Make the outer ring
     radius_ring = outer_rad + donut_len*np.random.random(outer_pts)
     direction_ring = 2*np.pi*np.random.random(size = outer_pts)
-    #Simulate ring points
+    # Simulate ring points
     ring_x = radius_ring*np.cos(direction_ring)
     ring_y = radius_ring*np.sin(direction_ring)
     crater_ring = zip(ring_x, ring_y)

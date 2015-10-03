@@ -1,7 +1,6 @@
 __author__ = 'https://www.kaggle.com/cbourguignat/otto-group-product-classification-challenge/why-calibration-works'
 
 import pandas as pd
-import sklearn
 from sklearn.preprocessing import LabelEncoder
 from sklearn.cross_validation import train_test_split
 from sklearn.ensemble import RandomForestClassifier, BaggingClassifier

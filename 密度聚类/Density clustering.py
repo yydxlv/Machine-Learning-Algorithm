@@ -7,14 +7,14 @@ import numpy as np
 
 data = pd.read_csv("Wholesale customers data.csv")
 # Drop non-continuous variables
-data.drop(["Channel", "Region"], axis = 1, inplace = True)
+data.drop(["Channel", "Region"], axis = 1, inplace=True)
 
 # So we can visualize the data, I'm going to use only two of these attributes:
 
 # Groceries: The customer's annual spending (in some monetary unit) on grocery products.
 # Milk: The customer's annual spending (in some monetary unit) on milk products.
 data = data[["Grocery", "Milk"]]
-data = data.as_matrix().astype("float32", copy = False)
+data = data.as_matrix().astype("float32", copy=False)
 
 # Because the values of the data are in the thousands, we are going to normalize each attribute by scaling it to 0 mean
 # and unit variance.
@@ -41,7 +41,7 @@ if __name__=="__main__":
     def add_noise(X,y, noise_level = 0.01):
         # The number of points we wish to make noisy
         amt_noise = int(noise_level*len(y))
-        #Pick amt_noise points at random
+        # Pick amt_noise points at random
         idx = np.random.choice(len(X), size = amt_noise)
         # Add random noise to these selected points
         noise = np.random.random((amt_noise, 2) ) -0.5
