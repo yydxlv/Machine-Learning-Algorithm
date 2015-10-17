@@ -58,12 +58,11 @@ for ds in datasets:
     ax.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright)
     # and testing points
     ax.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright, alpha=0.6)
-    ax.set_xlim(xx.min(), xx.max())
+    ax.set_xlim(xx.min(), xx.max())  # 设置X轴范围
     ax.set_ylim(yy.min(), yy.max())
-    ax.set_xticks(())
+    ax.set_xticks(())                # 设置X轴间隔，间隔为我们感兴趣的刻度
     ax.set_yticks(())
     i += 1
-
     # iterate over classifiers
     for name, clf in zip(names, classifiers):
         ax = plt.subplot(len(datasets), len(classifiers) + 1, i)
@@ -84,16 +83,14 @@ for ds in datasets:
         # Plot also the training points
         ax.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright)
         # and testing points
-        ax.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright,alpha=0.6)
+        ax.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright, alpha=0.6)
 
         ax.set_xlim(xx.min(), xx.max())
         ax.set_ylim(yy.min(), yy.max())
         ax.set_xticks(())
         ax.set_yticks(())
         ax.set_title(name)
-        ax.text(xx.max() - .3, yy.min() + .3, ('%.2f' % score).lstrip('0'),
-                size=15, horizontalalignment='right')
+        ax.text(xx.max() - .3, yy.min() + .3, ('%.2f' % score).lstrip('0'), size=15, horizontalalignment='right')
         i += 1
-
 figure.subplots_adjust(left=.02, right=.98)
 plt.show()
