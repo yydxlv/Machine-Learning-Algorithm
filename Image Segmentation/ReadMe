@@ -1,0 +1,2 @@
+Compute the segmentation of a 2D image with Ward hierarchical clustering.
+The clustering is spatially constrained in order for each segmented region to be in one piece.
