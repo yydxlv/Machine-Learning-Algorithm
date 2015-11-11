@@ -46,7 +46,7 @@ def kMeans(dataSet, k, distMeas=distEclud, createCent=randCent):
 
 def biKmeans(dataSet, k, distMeas=distEclud):
     m = shape(dataSet)[0]
-    clusterAssment = mat(zeros((m,2)))
+    clusterAssment = mat(zeros((m, 2)))
     centroid0 = mean(dataSet, axis=0).tolist()[0]
     centList =[centroid0]   # create a list with one centroid
     for j in range(m):  # calc initial Error
@@ -54,7 +54,7 @@ def biKmeans(dataSet, k, distMeas=distEclud):
     while len(centList) < k:
         lowestSSE = inf
         for i in range(len(centList)):
-            ptsInCurrCluster = dataSet[nonzero(clusterAssment[:, 0].A == i)[0], :]  # get the data points currently in cluster i
+            ptsInCurrCluster = dataSet[nonzero(clusterAssment[:, 0].A == i)[0], :]  #  get the data points currently in cluster i
             centroidMat, splitClustAss = kMeans(ptsInCurrCluster, 2, distMeas)
             sseSplit = sum(splitClustAss[:, 1])  # compare the SSE to the currrent minimum
             sseNotSplit = sum(clusterAssment[nonzero(clusterAssment[:, 0].A != i)[0], 1])
@@ -125,7 +125,7 @@ def clusterClubs(numClust=5):
     ax0=fig.add_axes(rect, label='ax0', **axprops)
     imgP = plt.imread('Portland.png')
     ax0.imshow(imgP)
-    ax1=fig.add_axes(rect, label='ax1', frameon=False)  # Ê¹ÓÃÁ½Ì××ø±êÏµ£¬²¢ÇÒ²»ÓÃ×öÈÎºÎËõ·Å»òÆ«ÒÆ
+    ax1=fig.add_axes(rect, label='ax1', frameon=False)  # Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½Å»ï¿½Æ«ï¿½ï¿½
     for i in range(numClust):
         ptsInCurrCluster = datMat[nonzero(clustAssing[:, 0].A == i)[0], :]
         markerStyle = scatterMarkers[i % len(scatterMarkers)]
