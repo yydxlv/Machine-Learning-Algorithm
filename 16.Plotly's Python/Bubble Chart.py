@@ -4,7 +4,7 @@ __author__ = 'xilin'
 # You can reproduce this figure in Python with the following code!
 # Learn about API authentication here: https://plot.ly/python/getting-started
 # Find your api_key here: https://plot.ly/settings/api
-import plotly.plotly as py
+
 from plotly.graph_objs import *
 py.sign_in('yydxlv', '29w25y7u88')
 import plotly.plotly as py
