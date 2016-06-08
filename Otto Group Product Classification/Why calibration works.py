@@ -17,10 +17,10 @@ from sklearn.calibration import CalibratedClassifierCV
 # This script is an example of how to implement calibration, and check if it boosts performance.
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     # Import Data
     # X = pd.read_csv('../input/train.csv')
-    X = pd.read_csv('train.csv')
+    X = pd.read_csv('train.csv', index_col=None, na_values=['NA'])
     X = X.drop('id', axis=1)
 
     # Extract target
