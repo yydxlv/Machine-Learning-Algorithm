@@ -45,8 +45,8 @@ data = [trace0]
 
 # layout has properties like x-axis label, y-axis label, background-color etc
 layout = Layout(
-    xaxis = {'title':"Country"}, # x-axis label
-    yaxis = {'title':" No of ATP players produced"}, # y-axis label
+    xaxis={'title':"Country"}, # x-axis label
+    yaxis={'title':" No of ATP players produced"}, # y-axis label
     showlegend=False,
     height=600,  # height & width of plot
     width=600,

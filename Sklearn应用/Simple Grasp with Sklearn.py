@@ -72,7 +72,7 @@ for subject in subjects:
 
 
  # Read test data
- #    fnames = glob('../input/test/subj%d_series*_data.csv' % subject)
+ # fnames = glob('../input/test/subj%d_series*_data.csv' % subject)
     fnames = glob('data.csv')
     test = []
     idx=[]
@@ -96,7 +96,7 @@ for subject in subjects:
     for i in range(6):
         y_train= y[:,i]
         print('Train subject %d, class %s' % (subject, cols[i]))
-        lr.fit(X_train[::subsample, :], y_train[::subsample])    # 每隔100行取样一次
+        lr.fit(X_train[::subsample, :], y_train[::subsample])    # 每锟斤拷100锟斤拷取锟斤拷一锟斤拷
         pred[:, i] = lr.predict_proba(X_test)[:, 1]
     pred_tot.append(pred)
 
