@@ -17,7 +17,7 @@ def prepare_data_train(fname):
     events_fname = fname.replace('data', 'events')
     print(events_fname)
     # read event file
-    labels= pd.read_csv(events_fname)
+    labels = pd.read_csv(events_fname)
     clean=data.drop(['id'], axis=1)  # remove id
     labels=labels.drop(['id'], axis=1)  # remove id
     return clean,labels
@@ -53,7 +53,7 @@ pred_tot = []
 
 # loop on subjects and 8 series for train data + 2 series for test data
 for subject in subjects:
-    y_raw= []
+    y_raw = []
     raw = []
     #  READ DATA
     # fnames = glob('../input/train/subj%d_series*_data.csv' % subject)
@@ -90,22 +90,20 @@ for subject in subjects:
 
  #  Train classifiers
     lr = LogisticRegression()
-    pred = np.empty((X_test.shape[0],6))
+    pred = np.empty((X_test.shape[0], 6))
     X_train=data_preprocess_train(X_train)
     X_test=data_preprocess_test(X_test)
     for i in range(6):
-        y_train= y[:,i]
+        y_train = y[:, i]
         print('Train subject %d, class %s' % (subject, cols[i]))
-        lr.fit(X_train[::subsample, :], y_train[::subsample])    # ÿ��100��ȡ��һ��
+        lr.fit(X_train[::subsample, :], y_train[::subsample])
         pred[:, i] = lr.predict_proba(X_test)[:, 1]
     pred_tot.append(pred)
 
 # submission file
 submission_file = 'grasp-sub-simple.csv'
-
 # create pandas object for sbmission
-submission = pd.DataFrame(index=np.concatenate(ids_tot),columns=cols,data=np.concatenate(pred_tot))
-
+submission = pd.DataFrame(index=np.concatenate(ids_tot), columns=cols,data=np.concatenate(pred_tot))
 # write file
 submission.to_csv(submission_file,index_label='id',float_format='%.3f')
 
