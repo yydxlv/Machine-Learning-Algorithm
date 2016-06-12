@@ -42,7 +42,7 @@ def data_preprocess_test(X):
 # this down sampling here it needed only to keep the script run below 10 minutes.
 # please do not downsample or use correct procedure to decimate data without alias
 
-subsample=100  # training subsample.if you want to downsample the training data
+subsample =  100  # training subsample.if you want to downsample the training data
 # columns name for labels
 cols = ['HandStart','FirstDigitTouch', 'BothStartLoadPhase','LiftOff','Replace','BothReleased']
 
@@ -55,7 +55,6 @@ pred_tot = []
 for subject in subjects:
     y_raw = []
     raw = []
-    #  READ DATA
     # fnames = glob('../input/train/subj%d_series*_data.csv' % subject)
     fnames = glob('data.csv')
     for fname in fnames:
